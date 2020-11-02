@@ -10,8 +10,6 @@ Desenvolvido por: Itamar Almeida.
 
 Periodo do desenvolvimento: 31/11/2020.
 
-# ========================================
-
 # Requisitos do sistema:
 
 Pandas
@@ -32,7 +30,7 @@ Coeficientes de correlação
 
 Etc...
 
-# ========================================
+# Comportamento Geral
 
 -- 1 -- 
 Carregue o arquivo 'prev_201110.txt' extraindo os valores de data/hora e
