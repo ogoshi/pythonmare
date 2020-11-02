@@ -2,12 +2,12 @@
 from tidalData import TidalData
 from pprint import pprint
 
+
 class Main:
     def configure_app_data(self, filename):
-        
         td = TidalData(filename)
-        
-        self.data = td.get_data_from_file()
+
+        self.data = td.data2dict()
         self.metadata = td.get_metadata()
         pprint(self.data)
         pprint(self.metadata)
