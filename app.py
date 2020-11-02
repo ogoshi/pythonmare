@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import tkinter as tk
 from tkinter import ttk
-from utils import menu_items, items_notebook
+from utils import menu_items, items_notebook, frames_list
 from tkinter import filedialog
 
 
@@ -21,6 +21,15 @@ class PythonMareApplication(tk.Tk):
             command=lambda: self.open_data()
         )
         button.pack()
+
+    def setup_frames(self):
+        for F in frames_list:
+
+            frame = F(self.container, self)
+
+            self.frames[F] = frame
+
+            frame.grid(row=0, column=0, sticky="nsew")
 
     def setup_menu(self):
         for item in menu_items:
