@@ -2,24 +2,36 @@ Atividade para prática em Python para a disciplina Maré - LABOFIS/FAOC/UERJ
 Outubro de 2020
 
 
-ANALISE ESTATISTICA E COMPARACAO ENTRE OS MODELOS MOHID E PACMARE COM DADOS MEDIDOS REAIS ###
+ANALISE ESTATISTICA E COMPARACAO ENTRE OS MODELOS MOHID E PACMARE COM DADOS MEDIDOS REAIS
+
 FAOC - Maré 2020.1.
+
 Desenvolvido por: Itamar Almeida.
+
 Periodo do desenvolvimento: 31/11/2020.
-==================================================================================
+
+#========================================
 
 #Requisitos do sistema:
+
 Pandas
+
 Numerical Python
+
 datetime
+
 Matplotlib
+
 Scipy
 
 #Objetivos:
+
 Processar dados de maré
+
 Coeficientes de correlação
+
 Etc...
-==================================================================================
+#========================================
 
 -- 1 -- 
 Carregue o arquivo 'prev_201110.txt' extraindo os valores de data/hora e
