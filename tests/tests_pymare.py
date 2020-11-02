@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
-import os
-from io import TextIOWrapper
 import unittest
 from pymare import main
 import tkinter as tk
+
 
 class TestMain(unittest.TestCase):
     def test_configure_app_data(self):

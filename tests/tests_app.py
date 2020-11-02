@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-import os
-from io import TextIOWrapper
 import unittest
 from app import PythonMareApplication
 import tkinter as tk
@@ -21,14 +19,14 @@ class TestCaseApp(unittest.TestCase):
                 "frames"
             ),
             True,
-            "Aplicativo não possui atributo frames!" 
+            "Aplicativo não possui atributo frames!"
         )
 
     def test_app_has_any_frames(self):
         self.assertEqual(
-            len(PythonMareApplication().frames.values())>0,
+            len(PythonMareApplication().frames.values()) > 0,
             True,
-            "Aplicativo não possui nenhum frames!" 
+            "Aplicativo não possui nenhum frames!"
         )
 
     def test_app_has_setup_menu(self):
@@ -38,9 +36,8 @@ class TestCaseApp(unittest.TestCase):
                 "setup_menu"
             ),
             True,
-            "Aplicativo não possui method de criar menus!" 
+            "Aplicativo não possui method de criar menus!"
         )
-
 
     def test_app_has_make_notebook(self):
         self.assertEqual(
@@ -49,5 +46,5 @@ class TestCaseApp(unittest.TestCase):
                 "make_notebook"
             ),
             True,
-            "Aplicativo não cria notebook!" 
+            "Aplicativo não cria notebook!"
         )

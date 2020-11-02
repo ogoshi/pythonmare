@@ -1,7 +1,7 @@
 """Modulo para processamento dos dados"""
 from tidalData import TidalData
-from pprint import pprint
 from app import PythonMareApplication
+
 
 class Main:
     def configure_app_data(self, filename):
@@ -13,6 +13,7 @@ class Main:
     def configure_app(self):
         app = PythonMareApplication()
         return app
+
 
 main = Main()
 
