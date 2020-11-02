@@ -14,22 +14,15 @@ class PythonMareApplication(tk.Tk):
         self.frames = {}
 
         self.setup_menu()
-        notebooks = self.make_notebook(self)
-        button = ttk.Button(
-            notebooks["Pythonmare"],
-            text="Open",
-            command=lambda: self.open_data()
-        )
-        button.pack()
+        self.notebooks = self.make_notebook(self)
+        self.setup_frames()
 
     def setup_frames(self):
         for F in frames_list:
 
-            frame = F(self.container, self)
-
+            frame = F(self.notebooks['Pythonmare'], self)
+            frame.setup()
             self.frames[F] = frame
-
-            frame.grid(row=0, column=0, sticky="nsew")
 
     def setup_menu(self):
         for item in menu_items:
@@ -38,8 +31,9 @@ class PythonMareApplication(tk.Tk):
                 menu=None
             )
 
-    def open_data(self, event=None):
+    def open_data(self, event):
         filename = filedialog.askopenfilename()
+        event(filename)
         print('Selected:', filename)
 
     def make_notebook(self, parent):
