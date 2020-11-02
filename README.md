@@ -37,7 +37,7 @@ Etc...
 1) Carregue o arquivo 'prev_201110.txt' extraindo os valores de data/hora e
 da altura da maré. Depois imprima na tela o comprimento dessas variáveis.
 
-2) Elabore um gráfico tipo plot para a altura da marÃ©.
+2) Elabore um gráfico tipo plot para a altura da maré.
 
 3) Obtenha e atribua variáveis para o valor mínimo, máximo, média,
 variância e desvio padrão da altura da maré.
