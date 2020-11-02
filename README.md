@@ -34,20 +34,16 @@ Etc...
 
 # Comportamento Geral
 
-1) 
-Carregue o arquivo 'prev_201110.txt' extraindo os valores de data/hora e
+1) Carregue o arquivo 'prev_201110.txt' extraindo os valores de data/hora e
 da altura da maré. Depois imprima na tela o comprimento dessas variáveis.
 
-2)
-Elabore um gráfico tipo plot para a altura da marÃ©.
+2) Elabore um gráfico tipo plot para a altura da marÃ©.
 
-3)
-Obtenha e atribua variáveis para o valor mínimo, máximo, média,
+3) Obtenha e atribua variáveis para o valor mínimo, máximo, média,
 variância e desvio padrão da altura da maré.
 Encontre em que índices encontram-se os valores mínimo e máximo.
 
-4)
-Utilizando a função 'subplot' do pyplot faça uma figura com dois 
+4) Utilizando a função 'subplot' do pyplot faça uma figura com dois 
 gráficos, um acima do outro, seguindo as instruções a seguir:
 Posição superior: refaçaa o gráfico do item 2.
 Posição inferior: subtraia da altura da maré o valor média da mesma e plote.
