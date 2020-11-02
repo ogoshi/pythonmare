@@ -22,7 +22,8 @@ Matplotlib
 
 Processar dados de maré
 
-Coeficientes de correlação
+Resultados estatísticos
+Plote de gráficos de maré
 
 Etc...
 # 
@@ -43,3 +44,11 @@ gráficos, um acima do outro, seguindo as instruções a seguir:
 Posição superior: refaçaa o gráfico do item 2.
 Posição inferior: subtraia da altura da maré o valor média da mesma e plote.
 Compare e discuta estes gráficos.
+
+# Modo de uso
+
+1) git clone https://github.com/ogoshi/pythonmare.git 
+
+2) cd pythonmare
+
+3) python pymare.py --> irá subir a aplicação desktop para manipulação dos dados.

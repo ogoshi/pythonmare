@@ -43,3 +43,13 @@ class TestUtils(unittest.TestCase):
             True,
             "Utils não possui items_notebook"
         )
+
+    def test_utils_has_frames_list(self):
+        self.assertEqual(
+            hasattr(
+                utils,
+                'frames_list'
+            ),
+            True,
+            "Utils não possui frames_list"
+        )

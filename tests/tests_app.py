@@ -48,3 +48,13 @@ class TestCaseApp(unittest.TestCase):
             True,
             "Aplicativo não cria notebook!"
         )
+
+    def test_app_has_setup_frames(self):
+        self.assertEqual(
+            hasattr(
+                PythonMareApplication(),
+                "setup_frames"
+            ),
+            True,
+            "Aplicativo não cria instala os frames!"
+        )
