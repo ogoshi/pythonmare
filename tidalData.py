@@ -7,7 +7,8 @@ Curso: Oceanografia UERJ
 """
 import os
 import re
-from datetime import datetime
+from datetime import datetime, timedelta
+import pytz
 
 thisPath = os.path.realpath('__file__')
 thisDir = os.path.dirname(thisPath)
@@ -48,7 +49,7 @@ class TidalData(object):
         metadata = {}
         for m in md:
             k, v = m.split(':')
-            metadata[k] = v
+            metadata[k] = v.strip(" ").split()
         return metadata
 
     def remove_broken_line(self, values):
@@ -70,3 +71,12 @@ class TidalData(object):
                 ]
             )
         return date_temp
+
+    def data2dict(self):
+        dict_temp = {}
+        tz = float(self.get_metadata()['Fuso'][0])
+        for line in self.get_data_from_file():
+            k, v = line
+            k = pytz.utc.localize(k)
+            dict_temp[k + timedelta(hours=-tz)] = float(v)
+        return dict_temp
