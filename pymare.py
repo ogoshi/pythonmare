@@ -1,7 +1,7 @@
 """Modulo para processamento dos dados"""
 from tidalData import TidalData
 from pprint import pprint
-
+from app import PythonMareApplication
 
 class Main:
     def configure_app_data(self, filename):
@@ -9,13 +9,15 @@ class Main:
 
         self.data = td.data2dict()
         self.metadata = td.get_metadata()
-        pprint(self.data)
-        pprint(self.metadata)
 
+    def configure_app(self):
+        app = PythonMareApplication()
+        return app
 
 main = Main()
 
 
 if __name__ == "__main__":
 
-    main.configure_app_data("prev_201110.txt")
+    app = main.configure_app()
+    app.mainloop()
