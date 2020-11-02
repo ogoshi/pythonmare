@@ -21,7 +21,9 @@ class TidalData(object):
         self.values = []
 
     def read_arqv(self):
-        self.arqv = open(self.__filename).readlines()
+        arqv = open(self.__filename)
+        self.arqv = arqv.readlines()
+        arqv.close()
 
     def process_line(self, values):
         return [item.split() for item in values]

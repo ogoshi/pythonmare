@@ -2,7 +2,7 @@
 import os
 from io import TextIOWrapper
 import unittest
-from tidalData import TidalData
+from tidal_data import TidalData
 from datetime import datetime
 
 
