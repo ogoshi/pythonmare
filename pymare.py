@@ -21,4 +21,6 @@ main = Main()
 if __name__ == "__main__":
 
     app = main.configure_app()
+    app.eval('tk::PlaceWindow . center')
+
     app.mainloop()

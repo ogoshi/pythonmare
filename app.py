@@ -14,13 +14,15 @@ class PythonMareApplication(tk.Tk):
         self.frames = {}
 
         self.setup_menu()
-        self.notebooks = self.make_notebook(self)
-        self.setup_frames()
 
-    def setup_frames(self):
+        self.notebooks = self.make_notebook(self)
+
+        self.setup_frames(self.notebooks['Pythonmare'])
+
+    def setup_frames(self, parent):
         for F in frames_list:
 
-            frame = F(self.notebooks['Pythonmare'], self)
+            frame = F(parent, self)
             frame.setup()
             self.frames[F] = frame
 
@@ -33,7 +35,7 @@ class PythonMareApplication(tk.Tk):
 
     def open_data(self, event):
         filename = filedialog.askopenfilename()
-        event(filename)
+        event(filename.split('/')[-1])
         print('Selected:', filename)
 
     def make_notebook(self, parent):
