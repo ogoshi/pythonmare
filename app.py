@@ -1,39 +1,98 @@
 # -*- coding: utf-8 -*-
 import tkinter as tk
 from tkinter import ttk
-from utils import menu_items, items_notebook, frames_list
+from utils import (
+    items_notebook
+)
+
+from tree_viewer import TreeViewer
+from app_plot import TidalGraph
+
 from tkinter import filedialog
+
+
+LARGE_FONT = ("Verdana", 12)
+NORM_FONT = ("Verdana", 10)
+SMALL_FONT = ("Verdana", 8)
+
+
+def popupmsg(msg):
+    popup = tk.Tk()
+    popup.wm_title("!")
+    label = ttk.Label(popup, text=msg, font=NORM_FONT)
+    label.pack(side="top", fill="x", pady=10)
+    B1 = ttk.Button(popup, text="Okay", command=popup.destroy)
+    B1.pack()
+    popup.mainloop()
 
 
 class PythonMareApplication(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.menubar = tk.Menu(self)
-        self.config(menu=self.menubar)
-        self.title('Python Maré DataViewer')
+        self.title('Python Mare DataViewer')
         self.frames = {}
+        self.notebooks = self.make_notebook(self)
+
+        self.container = tk.Frame(self.notebooks['Pythonmare'])
+        self.container.pack(side="right", fill="x", expand=True)
+        self.container.grid_rowconfigure(0, weight=1)
+        self.container.grid_columnconfigure(0, weight=1)
+
+        self.setup_frames(self.container)
 
         self.setup_menu()
-        self.notebooks = self.make_notebook(self)
-        self.setup_frames()
 
-    def setup_frames(self):
-        for F in frames_list:
+    def setup_frames(self, parent):
+        cont = 0
 
-            frame = F(self.notebooks['Pythonmare'], self)
-            frame.setup()
+        for F in (TreeViewer, TidalGraph):
+            frame = F(parent, self)
             self.frames[F] = frame
+            frame.pack(side=tk.LEFT, fill=tk.Y, expand=tk.TRUE, padx=3, pady=2)
+            cont += 1
 
     def setup_menu(self):
-        for item in menu_items:
-            self.menubar.add_cascade(
-                label=item,
-                menu=None
-            )
+        menubar = tk.Menu(self)
+
+        filemenu = tk.Menu(menubar, tearoff=0)
+        filemenu.add_command(
+            label="Save settings",
+            command=lambda: popupmsg("Not supported just yet!")
+        )
+        filemenu.add_separator()
+        filemenu.add_command(label="Exit", command=quit)
+
+        menubar.add_cascade(label="File", menu=filemenu)
+
+        style = tk.Menu(menubar, tearoff=1)
+        style.add_command(
+            label="classic",
+            command=lambda: self.frames[TidalGraph].estilo("classic")
+        )
+        style.add_command(
+            label="ggplot",
+            command=lambda: self.frames[TidalGraph].estilo("ggplot")
+        )
+        style.add_command(
+            label="bmh",
+            command=lambda: self.frames[TidalGraph].estilo("bmh")
+        )
+        style.add_command(
+            label="dark_background",
+            command=lambda: self.frames[TidalGraph].estilo("dark_background")
+        )
+        style.add_command(
+            label="fivethirtyeight",
+            command=lambda: self.frames[TidalGraph].estilo("fivethirtyeight")
+        )
+
+        menubar.add_cascade(label="Definir Estilo", menu=style)
+
+        tk.Tk.config(self, menu=menubar)
 
     def open_data(self, event):
         filename = filedialog.askopenfilename()
-        event(filename)
+        event(filename.split('/')[-1])
         print('Selected:', filename)
 
     def make_notebook(self, parent):
@@ -44,8 +103,12 @@ class PythonMareApplication(tk.Tk):
             abas.add(dict_notebook[item], text=item)
 
         abas.pack(
-            side=tk.TOP,
+            side=tk.RIGHT,
             fill=tk.BOTH,
-            expand=tk.YES
+            expand=tk.TRUE
         )
         return dict_notebook
+
+    def show_frame(self, conteudo):
+        frame = self.frames[conteudo]
+        frame.tkraise()

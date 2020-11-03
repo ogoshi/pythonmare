@@ -9,7 +9,7 @@ class TestCaseApp(unittest.TestCase):
         self.assertIsInstance(
             PythonMareApplication(),
             tk.Tk,
-            "N√£o √© uma instancia de TK!!"
+            "N„o È uma instancia de TK!!"
         )
 
     def test_app_has_frames(self):
@@ -19,14 +19,14 @@ class TestCaseApp(unittest.TestCase):
                 "frames"
             ),
             True,
-            "Aplicativo n√£o possui atributo frames!"
+            "Aplicativo n„o possui atributo frames!"
         )
 
     def test_app_has_any_frames(self):
         self.assertEqual(
             len(PythonMareApplication().frames.values()) > 0,
             True,
-            "Aplicativo n√£o possui nenhum frames!"
+            "Aplicativo n„o possui nenhum frames!"
         )
 
     def test_app_has_setup_menu(self):
@@ -36,7 +36,7 @@ class TestCaseApp(unittest.TestCase):
                 "setup_menu"
             ),
             True,
-            "Aplicativo n√£o possui method de criar menus!"
+            "Aplicativo n„o possui method de criar menus!"
         )
 
     def test_app_has_make_notebook(self):
@@ -46,7 +46,7 @@ class TestCaseApp(unittest.TestCase):
                 "make_notebook"
             ),
             True,
-            "Aplicativo n√£o cria notebook!"
+            "Aplicativo n„o cria notebook!"
         )
 
     def test_app_has_setup_frames(self):
@@ -56,5 +56,5 @@ class TestCaseApp(unittest.TestCase):
                 "setup_frames"
             ),
             True,
-            "Aplicativo n√£o cria instala os frames!"
+            "Aplicativo n„o cria instala os frames!"
         )
