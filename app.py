@@ -100,7 +100,6 @@ class PythonMareApplication(tk.Tk):
     def configure_app_data(self, filename):
         td = TidalData(filename)
         data = td.data2dict()
-        print(data.items())
         metadata = td.get_metadata()
         changeExchangeData(data, metadata)
 

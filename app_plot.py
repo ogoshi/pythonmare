@@ -15,7 +15,6 @@ f, ax = plt.subplots(nrows=1, ncols=1)
 
 def changeExchange(toWhat, pn):
     global exchange
-    print(toWhat)
     exchange = toWhat
 
 
@@ -66,6 +65,15 @@ def animate(i):
             x, y = line
             x_.append(x)
             y_.append(y)
+        a.plot(x_, y_)
+
+    elif exchange == "normalizado":
+        a = plt.subplot2grid((6, 4), (0, 0), rowspan=6, colspan=6)
+        nivel_medio = float(metadata["Nivel medio"][0])
+        for line in data.items():
+            x, y = line
+            x_.append(x)
+            y_.append(y-nivel_medio)
         a.plot(x_, y_)
 
     elif exchange == 'estatistica':

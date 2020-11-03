@@ -34,19 +34,17 @@ class TreeViewer(AppFrame):
         self.tree.column("size", stretch=0, width=100)
         self.name = "tree"
 
-        self.tree.bind("<Double-1>", self.OnDoubleClick)
+        self.tree.bind("<Double-1>", self.on_double_click)
         self.tree.pack(side=tk.LEFT, fill=tk.Y, expand=tk.TRUE, padx=3, pady=2)
 
         self.setup()
 
-    def OnDoubleClick(self, event):
+    def on_double_click(self, event):
         item = self.tree.selection()[0]
-
         changeExchange(
             self.tree.item(item, "text"),
             self.tree.item(item, "text")
         )
-        print("you clicked on", self.tree.item(item, "text"))
 
     def setup(self):
         self.add_button("Open", self.controller.open_data)
@@ -69,6 +67,12 @@ class TreeViewer(AppFrame):
             "end",
             text='mare',
             values=['mare', "text"]
+        )
+        self.tree.insert(
+            node,
+            "end",
+            text='normalizado',
+            values=['normalizado', "text"]
         )
         self.tree.insert(
             node,
