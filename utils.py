@@ -1,13 +1,26 @@
 # -*- coding: utf-8 -*-
-
 import os
-from tree_viewer import TreeViewer
 
 this_path = os.path.realpath('__file__')
 this_dir = os.path.dirname(this_path)
 
-menu_items = ["File", "Estilo"]
+menu_dict = {}
 
-items_notebook = ["Pythonmare", "Resultados"]
+items_notebook = ["Pythonmare"]
 
-frames_list = [TreeViewer]
+
+list_style = ["classic", "ggplot", "bmh", "dark_background", "fivethirtyeight"]
+list_file = ['Open', 'Exit']
+
+menu_dict["File"] = list_file
+menu_dict["Estilo"] = list_style
+
+
+def changeExchange(toWhat, pn):
+    global exchange
+    global DatCounter
+    global programName
+
+    exchange = toWhat
+    programName = pn
+    DatCounter = 9000

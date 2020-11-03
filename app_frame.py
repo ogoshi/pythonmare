@@ -9,29 +9,23 @@ class AppFrame(tk.Frame):
         self.parent = parent
         self.map_frames = {}
         self.tree = None
-        
-    def add_button(self, parent, name, controller):
+
+    def add_button(self, name, controller):
+        frame = tk.Frame(self)
+
         button = ttk.Button(
-            parent,
+            frame,
             text=name,
-            command=lambda: controller.open_data(self.populate_roots)
+            command=lambda: controller(self.action)
         )
-        button.pack(side=tk.LEFT, fill=tk.NONE, expand=tk.NO)
+        frame.pack(side=tk.TOP)
+        button.pack(side=tk.LEFT)
+
         self.add_frame2map(name, button)
 
-    def populate_roots(self, filename):
-        name = [
-            name for name in filename.split('/') if name.find('.txt') != -1
-        ]
-
-        node = self.tree.insert(
-                    '',
-                    'end',
-                    text=name[0],
-                    values=[filename, "directory"]
-        )
-        self.tree.pack(side=tk.TOP, fill=tk.BOTH, expand=tk.YES)
-        self.add_frame2map(filename, node)
+    def add_label(self, parent, text):
+        label = tk.Label(self, text=text)
+        label.pack(pady=10, padx=10)
 
     def add_frame2map(self, k, v):
         self.map_frames[k] = v

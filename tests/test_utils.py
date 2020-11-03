@@ -11,7 +11,7 @@ class TestUtils(unittest.TestCase):
                 'menu_items'
             ),
             True,
-            "Utils n√£o possui menu items"
+            "Utils n„o possui menu items"
         )
 
     def test_utils_has_this_path(self):
@@ -21,7 +21,7 @@ class TestUtils(unittest.TestCase):
                 'this_path'
             ),
             True,
-            "Utils n√£o possui this_path"
+            "Utils n„o possui this_path"
         )
 
     def test_utils_has_this_dir(self):
@@ -31,7 +31,7 @@ class TestUtils(unittest.TestCase):
                 'this_dir'
             ),
             True,
-            "Utils n√£o possui this_dir"
+            "Utils n„o possui this_dir"
         )
 
     def test_utils_has_items_notebook(self):
@@ -41,7 +41,7 @@ class TestUtils(unittest.TestCase):
                 'items_notebook'
             ),
             True,
-            "Utils n√£o possui items_notebook"
+            "Utils n„o possui items_notebook"
         )
 
     def test_utils_has_frames_list(self):
@@ -51,5 +51,5 @@ class TestUtils(unittest.TestCase):
                 'frames_list'
             ),
             True,
-            "Utils n√£o possui frames_list"
+            "Utils n„o possui frames_list"
         )
