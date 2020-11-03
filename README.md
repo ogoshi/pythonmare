@@ -12,9 +12,9 @@ Periodo do desenvolvimento: 31/11/2020.
 
 # Requisitos do sistema:
 
-datetime
+pip install -U pip --user
 
-Matplotlib
+pip install matplotlib
 
 # 
 
