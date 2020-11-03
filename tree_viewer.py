@@ -3,6 +3,7 @@ from app_frame import AppFrame
 import tkinter as tk
 from tkinter import ttk
 import os
+from app_plot import changeExchange
 
 this_path = os.path.realpath('__file__')
 this_dir = os.path.dirname(this_path)
@@ -32,9 +33,20 @@ class TreeViewer(AppFrame):
         self.tree.heading("size", text="File Size", anchor='w')
         self.tree.column("size", stretch=0, width=100)
         self.name = "tree"
+
+        self.tree.bind("<Double-1>", self.OnDoubleClick)
         self.tree.pack(side=tk.LEFT, fill=tk.Y, expand=tk.TRUE, padx=3, pady=2)
 
         self.setup()
+
+    def OnDoubleClick(self, event):
+        item = self.tree.selection()[0]
+
+        changeExchange(
+            self.tree.item(item, "text"),
+            self.tree.item(item, "text")
+        )
+        print("you clicked on", self.tree.item(item, "text"))
 
     def setup(self):
         self.add_button("Open", self.controller.open_data)
@@ -55,14 +67,14 @@ class TreeViewer(AppFrame):
         self.tree.insert(
             node,
             "end",
-            text='Plot1',
-            values=['plot1', "text"]
+            text='mare',
+            values=['mare', "text"]
         )
         self.tree.insert(
             node,
             "end",
-            text='Plot2',
-            values=['plot2', "text"]
+            text='estatistica',
+            values=['estatistica', "text"]
         )
 
     def autoscroll(self, sbar, first, last):

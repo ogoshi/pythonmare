@@ -14,13 +14,3 @@ list_file = ['Open', 'Exit']
 
 menu_dict["File"] = list_file
 menu_dict["Estilo"] = list_style
-
-
-def changeExchange(toWhat, pn):
-    global exchange
-    global DatCounter
-    global programName
-
-    exchange = toWhat
-    programName = pn
-    DatCounter = 9000

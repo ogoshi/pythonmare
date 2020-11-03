@@ -6,7 +6,8 @@ from utils import (
 )
 
 from tree_viewer import TreeViewer
-from app_plot import TidalGraph
+from app_plot import TidalGraph, changeExchangeData
+from tidal_data import TidalData
 
 from tkinter import filedialog
 
@@ -31,8 +32,9 @@ class PythonMareApplication(tk.Tk):
         super().__init__()
         self.title('Python Mare DataViewer')
         self.frames = {}
+        self.new_data = {}
         self.notebooks = self.make_notebook(self)
-
+        self.menubar = tk.Menu(self)
         self.container = tk.Frame(self.notebooks['Pythonmare'])
         self.container.pack(side="right", fill="x", expand=True)
         self.container.grid_rowconfigure(0, weight=1)
@@ -93,7 +95,14 @@ class PythonMareApplication(tk.Tk):
     def open_data(self, event):
         filename = filedialog.askopenfilename()
         event(filename.split('/')[-1])
-        print('Selected:', filename)
+        self.configure_app_data(filename)
+
+    def configure_app_data(self, filename):
+        td = TidalData(filename)
+        data = td.data2dict()
+        print(data.items())
+        metadata = td.get_metadata()
+        changeExchangeData(data, metadata)
 
     def make_notebook(self, parent):
         abas = ttk.Notebook(parent)

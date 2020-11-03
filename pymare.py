@@ -1,5 +1,4 @@
 """Modulo para processamento dos dados"""
-from tidal_data import TidalData
 from app import PythonMareApplication
 import matplotlib.animation as animation
 from app_plot import f, animate
@@ -7,10 +6,7 @@ from app_plot import f, animate
 
 class Main:
     def configure_app_data(self, filename):
-        td = TidalData(filename)
-
-        self.data = td.data2dict()
-        self.metadata = td.get_metadata()
+        pass
 
     def configure_app(self):
         app = PythonMareApplication()
