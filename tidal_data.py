@@ -81,4 +81,6 @@ class TidalData(object):
             k, v = line
             k = pytz.utc.localize(k)
             dict_temp[k + timedelta(hours=-tz)] = float(v)
-        return dict_temp
+        return {"time": list(
+            dict_temp.keys()),
+            "data": list(dict_temp.values())}
