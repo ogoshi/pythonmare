@@ -1,8 +1,12 @@
 import matplotlib.backends.backend_tkagg as plttk
 import matplotlib.pyplot as plt
+from matplotlib.figure import Figure
+
 import tkinter as tk
 from app_frame import AppFrame
 from matplotlib import style
+from collections import OrderedDict
+
 
 exchange = False
 data = None
@@ -10,12 +14,20 @@ metadata = None
 
 style.use("classic")
 
-f, ax = plt.subplots(nrows=1, ncols=1)
+LARGE_FONT = ("Verdana", 12)
+width, height = plt.figaspect(1)
 
 
-def changeExchange(toWhat, pn):
+def changeExchange(toWhat, pn, obj):
     global exchange
     exchange = toWhat
+    print(exchange)
+    if exchange == 'mare':
+        obj.plot_mare()
+    elif exchange == 'normalizado':
+        obj.plot_normalize()
+    elif exchange == 'estatistica':
+        obj.plot_statistic()
 
 
 def changeExchangeData(dataToWhat, metadataTowhat):
@@ -27,57 +39,98 @@ def changeExchangeData(dataToWhat, metadataTowhat):
 
 class TidalGraph(AppFrame):
     def __init__(self, parent, controller):
-        AppFrame.__init__(self, parent)
         self.parent = parent
-        self.controller = controller
-        self.setup()
+        if self.parent:
+            tk.Frame.__init__(self, parent)
+            self.main = self.master
+
+        self.globalopts = OrderedDict(
+            {
+                'dpi': 80,
+                'grid layout': False,
+                '3D plot': False
+            }
+        )
+
+        pframe = tk.Frame(self.main)
+
+        self.m = tk.PanedWindow(pframe, orient='vertical')
+        self.m.pack(fill=tk.BOTH, expand=1)
+        self.plotfr = tk.Frame(self.m)
+        self.fig, self.canvas = add_figure(self.plotfr)
+        self.ax = self.fig.add_subplot(111)
+        self.canvas.draw()
+        self.setup_gui()
+        self._init_figure()
 
     def action(self):
         pass
 
-    def setup(self):
-        self.canvas = plttk.FigureCanvasTkAgg(f, self)
-        self.canvas.draw()
-        self.canvas.get_tk_widget().pack(
-            side=tk.BOTTOM,
-            fill=tk.BOTH,
-            expand=tk.TRUE
-        )
-
-        self.toolbar = plttk.NavigationToolbar2Tk(self.canvas, self)
-        self.toolbar.update()
-        self.canvas._tkcanvas.pack(
-            side=tk.TOP,
-            fill=tk.BOTH,
-            expand=tk.TRUE)
-
-    def estilo(self, toWhat):
+    def update_style(self, toWhat):
         plt.style.use(toWhat)
         print(toWhat)
 
+    def setup_gui(self):
+        """Add GUI elements"""
 
-def animate(i):
-    x_ = []
-    y_ = []
-    if exchange == "mare":
-        a = plt.subplot2grid((6, 4), (0, 0), rowspan=6, colspan=6)
-        for line in data.items():
-            x, y = line
-            x_.append(x)
-            y_.append(y)
-        a.plot(x_, y_)
+        self.m = tk.PanedWindow(self, orient='vertical')
+        self.m.pack(fill=tk.BOTH, expand=1)
 
-    elif exchange == "normalizado":
-        a = plt.subplot2grid((6, 4), (0, 0), rowspan=6, colspan=6)
+        self.plotfr = tk.Frame(self.m)
+
+        self.fig, self.canvas = add_figure(self.plotfr)
+        self.ax = self.fig.add_subplot(111)
+
+        self.m.add(self.plotfr)
+
+        self.ctrlfr = tk.Frame(self.main)
+        self.m.add(self.ctrlfr)
+        self.m.pack(side=tk.LEFT,  expand=True)
+
+    def _init_figure(self):
+        self.fig.clear()
+        self.gridaxes = {}
+        self.ax = self.fig.add_subplot(111)
+        return
+
+    def plot_mare(self):
+        self._init_figure()
+        self.ax.plot(data['time'], data['data'])
+        self.ax.set_title("{} {} {} {}".format(*metadata['Estacao']))
+        self.fig.tight_layout()
+        self.canvas.draw()
+
+    def plot_normalize(self):
+        y_ = []
+        self._init_figure()
         nivel_medio = float(metadata["Nivel medio"][0])
-        for line in data.items():
-            x, y = line
-            x_.append(x)
+        for y in data['data']:
             y_.append(y-nivel_medio)
-        a.plot(x_, y_)
+        self.ax.plot(data['time'], y_)
+        self.ax.set_title("{} {} {} {}".format(*metadata['Estacao']))
+        self.fig.tight_layout()
+        self.canvas.draw()
 
-    elif exchange == 'estatistica':
-        a = plt.subplot2grid((6, 4), (0, 0), rowspan=6, colspan=6)
-        x = [1]
-        y = [10]
-        a.plot(x, y)
+    def plot_statistic(self):
+        pass
+
+
+def add_figure(parent, figure=None, resize_callback=None):
+    if not figure:
+        figure = Figure(facecolor='white')
+
+    canvas = plttk.FigureCanvasTkAgg(
+        figure,
+        master=parent,
+        resize_callback=resize_callback
+        )
+    canvas.draw()
+    canvas.get_tk_widget().pack(side=tk.BOTTOM, fill=tk.BOTH, expand=0)
+    canvas.get_tk_widget().configure(
+        highlightcolor='gray75',
+        highlightbackground='gray75'
+    )
+    toolbar = plttk.NavigationToolbar2Tk(canvas, parent)
+    toolbar.update()
+    canvas._tkcanvas.pack(side=tk.TOP, fill=tk.BOTH, expand=0)
+    return figure, canvas
