@@ -16,6 +16,8 @@ pip install -U pip --user
 
 pip install matplotlib
 
+pip install pandas
+
 # 
 
 # Objetivos:
