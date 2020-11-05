@@ -4,17 +4,10 @@ import tkinter as tk
 from tkinter import ttk
 import os
 from app_plot import changeExchange
-from app_plot import TidalGraph, fig_mare, fig_normalize, fig_estatistic
+from app_plot import TidalGraph
 
 this_path = os.path.realpath('__file__')
 this_dir = os.path.dirname(this_path)
-
-
-dict_figs = {
-    "mare": fig_mare,
-    "normalizado": fig_normalize,
-    "estatistica": fig_estatistic
-    }
 
 
 class TreeViewer(AppFrame):
