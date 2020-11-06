@@ -1,5 +1,5 @@
 """
-Modulo para processar dados de marÃ©
+Modulo para processar dados de mare
 
 Aluno: Itamar Almeida de Oliveira
 Data 01/11/2020
@@ -9,7 +9,8 @@ import os
 import re
 from datetime import datetime, timedelta
 import pytz
-
+from core import TableModel
+import pandas as pd
 thisPath = os.path.realpath('__file__')
 thisDir = os.path.dirname(thisPath)
 
@@ -81,6 +82,11 @@ class TidalData(object):
             k, v = line
             k = pytz.utc.localize(k)
             dict_temp[k + timedelta(hours=-tz)] = float(v)
-        return {"time": list(
-            dict_temp.keys()),
-            "data": list(dict_temp.values())}
+        data_d = {
+            "time": list(dict_temp.keys()),
+            "data": list(dict_temp.values())
+        }
+        df_data = TableModel(pd.DataFrame.from_dict(data_d))
+        df_data.setindex("time")
+        df_metadata = {}
+        return df_data
