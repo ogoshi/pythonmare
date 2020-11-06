@@ -1,10 +1,10 @@
 import matplotlib.backends.backend_tkagg as plttk
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
-
 import tkinter as tk
 from app_frame import AppFrame
 from matplotlib import style
+import matplotlib.dates as mdates
 from collections import OrderedDict
 
 
@@ -91,11 +91,16 @@ class TidalGraph(AppFrame):
         self.fig.clear()
         self.gridaxes = {}
         self.ax = self.fig.add_subplot(111)
+        self.ax.xaxis_date()
+        locator = mdates.AutoDateLocator(minticks=5, maxticks=12)
+        formatter = mdates.ConciseDateFormatter(locator)
+        self.ax.xaxis.set_major_locator(locator)
+        self.ax.xaxis.set_major_formatter(formatter)
         return
 
     def plot_mare(self):
         self._init_figure()
-        self.ax.plot(data['time'], data['data'])
+        self.ax.plot(data.df.index, data.df['data'])
         self.ax.set_title("{} {} {} {}".format(*metadata['Estacao']))
         self.fig.tight_layout()
         self.canvas.draw()
@@ -104,15 +109,22 @@ class TidalGraph(AppFrame):
         y_ = []
         self._init_figure()
         nivel_medio = float(metadata["Nivel medio"][0])
-        for y in data['data']:
+        for y in data.df['data']:
             y_.append(y-nivel_medio)
-        self.ax.plot(data['time'], y_)
+        self.ax.plot(data.df.index, y_)
         self.ax.set_title("{} {} {} {}".format(*metadata['Estacao']))
         self.fig.tight_layout()
         self.canvas.draw()
 
     def plot_statistic(self):
-        pass
+        self._init_figure()
+        df = data.df
+        df_max = df.loc[df['data'] == df.max().data]
+        df_min = df.loc[df['data'] == df.min().data]
+        self.ax.plot(df.index.values, df.data.values, '-k')
+        self.ax.plot(df_max.index.values, df_max.data.values, 'or')
+        self.ax.plot(df_min.index.values, df_min.data.values, 'ob')
+        self.canvas.draw()
 
 
 def add_figure(parent, figure=None, resize_callback=None):
