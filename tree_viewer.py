@@ -33,8 +33,8 @@ class TreeViewer(AppFrame):
         vsb['command'] = self.tree.yview
         hsb['command'] = self.tree.xview
         self.main.pack(side=tk.LEFT, fill=tk.Y, expand=tk.TRUE, padx=3, pady=2)
-        self.tree.heading("#0", text="Directory Structure", anchor='w')
-        self.tree.heading("size", text="File Size", anchor='w')
+        self.tree.heading("#0", text="Nome do Arquivo", anchor='w')
+        self.tree.heading("size", text="Tamanho", anchor='w')
         self.tree.column("size", stretch=0, width=100)
         self.name = "tree"
         self.tree.bind("<Double-1>", self.on_double_click)
@@ -58,6 +58,8 @@ class TreeViewer(AppFrame):
             text=filename,
             values=[filename, "text"]
         )
+        size = os.stat(os.path.join(this_dir, filename)).st_size
+        self.tree.set(node, "size", "%d bytes" % size)
         self.populate_tree(filename, node)
 
     def populate_tree(self, fname, node=None):
