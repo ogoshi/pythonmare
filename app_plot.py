@@ -1,3 +1,4 @@
+#-*- encoding: utf-8 -*-
 import matplotlib.backends.backend_tkagg as plttk
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
@@ -22,12 +23,28 @@ def changeExchange(toWhat, pn, obj):
     global exchange
     exchange = toWhat
     print(exchange)
+    df = data.df
     if exchange == 'mare':
-        obj.plot_mare()
+        obj.plot_line(df.index, df.data)
     elif exchange == 'normalizado':
-        obj.plot_normalize()
-    elif exchange == 'estatistica':
-        obj.plot_statistic()
+        nivel_medio = float(metadata["Nivel medio"][0])
+        obj.plot_line(df.index, df.data-nivel_medio)
+    elif exchange == 'Max - Min':
+        print("Max: {}m\n".format(df.max().data))
+        print("Min: {}m\n".format(df.min().data))
+        print('Média = {:.2f}m\n'.format(df.mean().data))
+        print('Desvio Padrãoo = {:.3f}m\n'.format(df.std().data))
+        print('Variancia = {:.3f}m'.format(df.std().data**2))
+
+        fig, (ax1, ax2) = plt.subplots(nrows=2, ncols=1)
+
+        ax1.plot(df.index, df['data'].values)
+        ax2.plot(df.index, df['data'].values-df.mean().data)
+        ax1.set_title("{} {} {} {}".format(*metadata['Estacao']))
+        ax1.set_ylabel("Nível de Maré (m)")
+        ax2.set_ylabel("Nível de Maré (m)")
+        ax2.set_xlabel("Data/Hora")
+        plt.show()
 
 
 def changeExchangeData(dataToWhat, metadataTowhat):
@@ -98,33 +115,16 @@ class TidalGraph(AppFrame):
         self.ax.xaxis.set_major_formatter(formatter)
         return
 
-    def plot_mare(self):
+    def plot_line(self, x, y):
         self._init_figure()
-        self.ax.plot(data.df.index, data.df['data'])
+        self.ax.plot(x, y)
         self.ax.set_title("{} {} {} {}".format(*metadata['Estacao']))
         self.fig.tight_layout()
         self.canvas.draw()
 
-    def plot_normalize(self):
-        y_ = []
+    def estilo(self, toWhat):
+        plt.style.use(toWhat)
         self._init_figure()
-        nivel_medio = float(metadata["Nivel medio"][0])
-        for y in data.df['data']:
-            y_.append(y-nivel_medio)
-        self.ax.plot(data.df.index, y_)
-        self.ax.set_title("{} {} {} {}".format(*metadata['Estacao']))
-        self.fig.tight_layout()
-        self.canvas.draw()
-
-    def plot_statistic(self):
-        self._init_figure()
-        df = data.df
-        df_max = df.loc[df['data'] == df.max().data]
-        df_min = df.loc[df['data'] == df.min().data]
-        self.ax.plot(df.index.values, df.data.values, '-k')
-        self.ax.plot(df_max.index.values, df_max.data.values, 'or')
-        self.ax.plot(df_min.index.values, df_min.data.values, 'ob')
-        self.canvas.draw()
 
 
 def add_figure(parent, figure=None, resize_callback=None):
@@ -137,12 +137,12 @@ def add_figure(parent, figure=None, resize_callback=None):
         resize_callback=resize_callback
         )
     canvas.draw()
-    canvas.get_tk_widget().pack(side=tk.BOTTOM, fill=tk.BOTH, expand=0)
+    canvas.get_tk_widget().pack(side=tk.BOTTOM, fill=tk.BOTH, expand=tk.TRUE)
     canvas.get_tk_widget().configure(
         highlightcolor='gray75',
         highlightbackground='gray75'
     )
     toolbar = plttk.NavigationToolbar2Tk(canvas, parent)
     toolbar.update()
-    canvas._tkcanvas.pack(side=tk.TOP, fill=tk.BOTH, expand=0)
+    canvas._tkcanvas.pack(side=tk.TOP, fill=tk.BOTH, expand=tk.TRUE)
     return figure, canvas

@@ -81,12 +81,11 @@ class TidalData(object):
         for line in self.get_data_from_file():
             k, v = line
             k = pytz.utc.localize(k)
-            dict_temp[k + timedelta(hours=-tz)] = float(v)
+            dict_temp[k + timedelta(hours=tz)] = float(v)
         data_d = {
             "time": list(dict_temp.keys()),
             "data": list(dict_temp.values())
         }
         df_data = TableModel(pd.DataFrame.from_dict(data_d))
         df_data.setindex("time")
-        df_metadata = {}
         return df_data

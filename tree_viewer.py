@@ -59,7 +59,7 @@ class TreeViewer(AppFrame):
             values=[filename, "text"]
         )
         size = os.stat(os.path.join(this_dir, filename)).st_size
-        self.tree.set(node, "size", "%d bytes" % size)
+        self.tree.set(node, "size", "%d Kbytes" % (size/1024))
         self.populate_tree(filename, node)
 
     def populate_tree(self, fname, node=None):
@@ -83,8 +83,8 @@ class TreeViewer(AppFrame):
         self.tree.insert(
             node,
             "end",
-            text='estatistica',
-            values=['estatistica', "text"]
+            text='Max - Min',
+            values=['Max - Min', "text"]
         )
 
     def autoscroll(self, sbar, first, last):
