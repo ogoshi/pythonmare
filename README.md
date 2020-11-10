@@ -53,4 +53,4 @@ Compare e discuta estes gráficos.
 
 2) cd pythonmare
 
-3) python pymare.py --> irá subir a aplicação desktop para manipulação dos dados.
+3) python main.py --> irá subir a aplicação desktop para manipulação dos dados.
